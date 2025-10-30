@@ -1,18 +1,22 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dio/dio.dart';
+import 'package:battery_plus/battery_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import 'injection_container.config.dart';
 import '../../data/services/cache_service.dart';
 import '../../data/services/qr_service.dart';
 import '../../data/services/recording_service.dart';
 import '../../data/services/notification_service.dart';
+import '../../data/services/performance_service.dart';
 import '../../data/datasources/animation_remote_data_source.dart';
 import '../../data/repositories/animation_repository_impl.dart';
 import '../../data/repositories/qr_repository_impl.dart';
 import '../../data/repositories/cache_repository_impl.dart';
 import '../../data/repositories/recording_repository_impl.dart';
 import '../../data/repositories/notification_repository.dart';
+import '../../data/repositories/performance_repository_impl.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,6 +28,7 @@ Future<void> configureDependencies() async {
   await getIt<CacheService>().initialize();
   await getIt<QRService>().initialize();
   await getIt<NotificationService>().initialize();
+  await getIt<PerformanceService>().initialize();
 }
 
 @module
@@ -70,4 +75,14 @@ abstract class RegisterModule {
 
   @singleton
   NotificationService get notificationService => NotificationService(notificationRepository, getIt);
+
+  @singleton
+  PerformanceService get performanceService => PerformanceService();
+
+  @singleton
+  PerformanceRepositoryImpl get performanceRepository => PerformanceRepositoryImpl(
+    performanceService,
+    getIt<DeviceInfoPlugin>(),
+    getIt<Battery>(),
+  );
 }

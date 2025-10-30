@@ -19,6 +19,7 @@ dependencies:
   flutter_riverpod: ^2.4.9
   get_it: ^7.6.4
   injectable: ^2.3.2
+  dartz: ^0.10.1
 
   # Networking & Data
   dio: ^5.4.0
@@ -61,16 +62,28 @@ dependencies:
   
   # Deep Links
   uni_links: ^0.5.1
+  
+  # Performance Monitoring
+  battery_plus: ^5.0.2
+  device_info_plus: ^9.1.1
+  flutter_displaymode: ^0.6.0
+  performance_monitor: ^0.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  integration_test:
+    sdk: flutter
   
   # Code Generation
   build_runner: ^2.4.7
   injectable_generator: ^2.4.1
   json_serializable: ^6.7.1
+  
+  # Testing
+  mockito: ^5.4.4
+  build_test: ^2.1.7
 
 flutter:
   uses-material-design: true

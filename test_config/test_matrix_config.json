@@ -1,0 +1,393 @@
+{
+  "version": "1.0.0",
+  "generated": "2024-01-01T00:00:00Z",
+  "description": "Comprehensive test matrix for Flutter AR application",
+  "deviceCategories": {
+    "flagship": {
+      "description": "High-end devices with premium specifications",
+      "requirements": {
+        "ram": "8GB+",
+        "android": "10+",
+        "arcore": "Full support",
+        "gpu": "High-end"
+      },
+      "expectedPerformance": {
+        "fps": ">55",
+        "startup": "<2s",
+        "memory": "<500MB",
+        "battery": "<15%/30min"
+      }
+    },
+    "midTier": {
+      "description": "Mid-range devices with balanced specifications",
+      "requirements": {
+        "ram": "4-8GB",
+        "android": "9+",
+        "arcore": "Supported",
+        "gpu": "Mid-range"
+      },
+      "expectedPerformance": {
+        "fps": ">30",
+        "startup": "<3s",
+        "memory": "<400MB",
+        "battery": "<20%/30min"
+      }
+    },
+    "lowEnd": {
+      "description": "Budget devices with basic specifications",
+      "requirements": {
+        "ram": "2-4GB",
+        "android": "7+",
+        "arcore": "Limited/No support",
+        "gpu": "Entry-level"
+      },
+      "expectedPerformance": {
+        "fps": ">15",
+        "startup": "<5s",
+        "memory": "<300MB",
+        "battery": "<25%/30min"
+      }
+    }
+  },
+  "testDevices": [
+    {
+      "id": "s23_ultra",
+      "name": "Samsung Galaxy S23 Ultra",
+      "category": "flagship",
+      "specifications": {
+        "model": "SM-S918B",
+        "ram": 12,
+        "cpu": "Snapdragon 8 Gen 2",
+        "gpu": "Adreno 740",
+        "android": "13",
+        "sdk": 33,
+        "screenSize": 6.8,
+        "resolution": "1440x3088",
+        "arcore": true
+      },
+      "testPriority": "high"
+    },
+    {
+      "id": "pixel_7_pro",
+      "name": "Google Pixel 7 Pro",
+      "category": "flagship",
+      "specifications": {
+        "model": "GQML3",
+        "ram": 12,
+        "cpu": "Google Tensor G2",
+        "gpu": "Mali-G710 MP7",
+        "android": "13",
+        "sdk": 33,
+        "screenSize": 6.7,
+        "resolution": "1440x3120",
+        "arcore": true
+      },
+      "testPriority": "high"
+    },
+    {
+      "id": "oneplus_11",
+      "name": "OnePlus 11",
+      "category": "flagship",
+      "specifications": {
+        "model": "PHB110",
+        "ram": 16,
+        "cpu": "Snapdragon 8 Gen 2",
+        "gpu": "Adreno 740",
+        "android": "13",
+        "sdk": 33,
+        "screenSize": 6.7,
+        "resolution": "1440x3216",
+        "arcore": true
+      },
+      "testPriority": "medium"
+    },
+    {
+      "id": "galaxy_a54",
+      "name": "Samsung Galaxy A54",
+      "category": "midTier",
+      "specifications": {
+        "model": "SM-A546B",
+        "ram": 8,
+        "cpu": "Exynos 1380",
+        "gpu": "Mali-G68 MP4",
+        "android": "13",
+        "sdk": 33,
+        "screenSize": 6.4,
+        "resolution": "1080x2340",
+        "arcore": true
+      },
+      "testPriority": "high"
+    },
+    {
+      "id": "pixel_7a",
+      "name": "Google Pixel 7a",
+      "category": "midTier",
+      "specifications": {
+        "model": "GAHL",
+        "ram": 8,
+        "cpu": "Google Tensor G2",
+        "gpu": "Mali-G710 MP7",
+        "android": "13",
+        "sdk": 33,
+        "screenSize": 6.1,
+        "resolution": "1080x2400",
+        "arcore": true
+      },
+      "testPriority": "high"
+    },
+    {
+      "id": "oneplus_nord_3",
+      "name": "OnePlus Nord 3",
+      "category": "midTier",
+      "specifications": {
+        "model": "CPH2491",
+        "ram": 8,
+        "cpu": "Dimensity 9000",
+        "gpu": "Mali-G710 MC10",
+        "android": "13",
+        "sdk": 33,
+        "screenSize": 6.74,
+        "resolution": "1240x2772",
+        "arcore": true
+      },
+      "testPriority": "medium"
+    },
+    {
+      "id": "galaxy_a14",
+      "name": "Samsung Galaxy A14",
+      "category": "lowEnd",
+      "specifications": {
+        "model": "SM-A145F",
+        "ram": 4,
+        "cpu": "Exynos 850",
+        "gpu": "Mali-G52",
+        "android": "13",
+        "sdk": 33,
+        "screenSize": 6.6,
+        "resolution": "720x1600",
+        "arcore": false
+      },
+      "testPriority": "medium"
+    },
+    {
+      "id": "redmi_note_11",
+      "name": "Redmi Note 11",
+      "category": "lowEnd",
+      "specifications": {
+        "model": "2201117TG",
+        "ram": 4,
+        "cpu": "Snapdragon 680",
+        "gpu": "Adreno 610",
+        "android": "11",
+        "sdk": 30,
+        "screenSize": 6.43,
+        "resolution": "1080x2400",
+        "arcore": true
+      },
+      "testPriority": "medium"
+    },
+    {
+      "id": "moto_g_play",
+      "name": "Moto G Play",
+      "category": "lowEnd",
+      "specifications": {
+        "model": "XT2093DL",
+        "ram": 3,
+        "cpu": "Snapdragon 460",
+        "gpu": "Adreno 610",
+        "android": "10",
+        "sdk": 29,
+        "screenSize": 6.5,
+        "resolution": "720x1600",
+        "arcore": false
+      },
+      "testPriority": "low"
+    }
+  ],
+  "testSuites": {
+    "smoke": {
+      "description": "Basic functionality tests",
+      "tests": [
+        {
+          "id": "app_launch",
+          "name": "App Launch Test",
+          "description": "Verify app launches successfully",
+          "priority": "critical",
+          "timeout": 30,
+          "categories": ["smoke", "performance"]
+        },
+        {
+          "id": "basic_navigation",
+          "name": "Basic Navigation Test",
+          "description": "Test navigation between main screens",
+          "priority": "critical",
+          "timeout": 60,
+          "categories": ["smoke"]
+        },
+        {
+          "id": "permission_handling",
+          "name": "Permission Handling Test",
+          "description": "Verify camera and storage permissions",
+          "priority": "critical",
+          "timeout": 45,
+          "categories": ["smoke"]
+        }
+      ]
+    },
+    "ar_functionality": {
+      "description": "AR-specific functionality tests",
+      "tests": [
+        {
+          "id": "ar_initialization",
+          "name": "ARCore Initialization",
+          "description": "Test ARCore startup and initialization",
+          "priority": "critical",
+          "timeout": 60,
+          "categories": ["ar_functionality", "performance"],
+          "requiresARCore": true
+        },
+        {
+          "id": "object_placement",
+          "name": "AR Object Placement",
+          "description": "Test placing and tracking AR objects",
+          "priority": "high",
+          "timeout": 120,
+          "categories": ["ar_functionality", "performance"],
+          "requiresARCore": true
+        },
+        {
+          "id": "tracking_stability",
+          "name": "AR Tracking Stability",
+          "description": "Test tracking accuracy and stability",
+          "priority": "high",
+          "timeout": 180,
+          "categories": ["ar_functionality", "performance"],
+          "requiresARCore": true
+        }
+      ]
+    },
+    "performance": {
+      "description": "Performance and resource usage tests",
+      "tests": [
+        {
+          "id": "frame_rate_stability",
+          "name": "Frame Rate Stability",
+          "description": "Monitor FPS during AR usage",
+          "priority": "high",
+          "timeout": 300,
+          "categories": ["performance"]
+        },
+        {
+          "id": "memory_usage",
+          "name": "Memory Usage Test",
+          "description": "Monitor memory consumption",
+          "priority": "high",
+          "timeout": 600,
+          "categories": ["performance"]
+        },
+        {
+          "id": "battery_drain",
+          "name": "Battery Drain Test",
+          "description": "Measure battery consumption",
+          "priority": "medium",
+          "timeout": 1800,
+          "categories": ["performance", "battery"]
+        }
+      ]
+    },
+    "video_alignment": {
+      "description": "Camera and video alignment tests",
+      "tests": [
+        {
+          "id": "camera_video_sync",
+          "name": "Camera-Video Synchronization",
+          "description": "Test alignment between camera preview and recording",
+          "priority": "high",
+          "timeout": 120,
+          "categories": ["video_alignment", "performance"]
+        },
+        {
+          "id": "recording_quality",
+          "name": "Video Recording Quality",
+          "description": "Test video quality at different resolutions",
+          "priority": "medium",
+          "timeout": 180,
+          "categories": ["video_alignment"]
+        }
+      ]
+    },
+    "multi_resolution": {
+      "description": "Multi-resolution and screen size tests",
+      "tests": [
+        {
+          "id": "ui_scaling",
+          "name": "UI Scaling Test",
+          "description": "Test UI at different screen densities",
+          "priority": "medium",
+          "timeout": 90,
+          "categories": ["multi_resolution"]
+        },
+        {
+          "id": "layout_adaptation",
+          "name": "Layout Adaptation Test",
+          "description": "Test layout on different screen sizes",
+          "priority": "medium",
+          "timeout": 90,
+          "categories": ["multi_resolution"]
+        }
+      ]
+    }
+  },
+  "testMatrix": {
+    "flagship": {
+      "includeTests": ["smoke", "ar_functionality", "performance", "video_alignment", "multi_resolution"],
+      "expectedResults": {
+        "app_launch": {"time": "<2s", "memory": "<200MB"},
+        "ar_initialization": {"time": "<3s", "success": "100%"},
+        "frame_rate_stability": {"min_fps": 45, "avg_fps": 58},
+        "memory_usage": {"peak": "<500MB", "growth": "<10MB/min"},
+        "battery_drain": {"rate": "<15%/30min"},
+        "camera_video_sync": {"alignment": "<2px", "latency": "<50ms"}
+      }
+    },
+    "midTier": {
+      "includeTests": ["smoke", "ar_functionality", "performance", "video_alignment", "multi_resolution"],
+      "expectedResults": {
+        "app_launch": {"time": "<3s", "memory": "<250MB"},
+        "ar_initialization": {"time": "<5s", "success": "95%"},
+        "frame_rate_stability": {"min_fps": 25, "avg_fps": 32},
+        "memory_usage": {"peak": "<400MB", "growth": "<15MB/min"},
+        "battery_drain": {"rate": "<20%/30min"},
+        "camera_video_sync": {"alignment": "<5px", "latency": "<100ms"}
+      }
+    },
+    "lowEnd": {
+      "includeTests": ["smoke", "performance", "multi_resolution"],
+      "excludeTests": ["ar_functionality"],
+      "expectedResults": {
+        "app_launch": {"time": "<5s", "memory": "<300MB"},
+        "frame_rate_stability": {"min_fps": 10, "avg_fps": 16},
+        "memory_usage": {"peak": "<300MB", "growth": "<20MB/min"},
+        "battery_drain": {"rate": "<25%/30min"},
+        "camera_video_sync": {"alignment": "<10px", "latency": "<200ms"}
+      }
+    }
+  },
+  "executionConfig": {
+    "parallelTests": true,
+    "maxConcurrentDevices": 3,
+    "retryFailedTests": true,
+    "maxRetries": 2,
+    "generateReports": true,
+    "uploadArtifacts": true,
+    "notificationChannels": ["email", "slack"]
+  },
+  "reporting": {
+    "formats": ["json", "html", "junit"],
+    "includeMetrics": true,
+    "includeScreenshots": true,
+    "includeLogs": true,
+    "retentionDays": 30,
+    "destinations": ["local", "s3"]
+  }
+}
