@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 
 import 'core/config/app_config.dart';
 import 'core/di/injection_container.dart';
@@ -12,6 +13,7 @@ import 'core/l10n/app_localizations.dart';
 import 'core/firebase_options.dart';
 import 'presentation/providers/locale_provider.dart';
 import 'data/repositories/notification_repository.dart';
+import 'presentation/widgets/performance_overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +44,7 @@ class FlutterArApp extends ConsumerWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp.router(
+        final app = MaterialApp.router(
           title: 'Flutter AR App',
           debugShowCheckedModeBanner: false,
           
@@ -64,6 +66,16 @@ class FlutterArApp extends ConsumerWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
         );
+
+        // Add performance overlay in debug mode
+        if (kDebugMode) {
+          return PerformanceOverlay(
+            enabled: true,
+            child: app,
+          );
+        }
+
+        return app;
       },
     );
   }

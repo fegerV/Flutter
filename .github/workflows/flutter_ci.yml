@@ -48,13 +48,93 @@ jobs:
       run: |
         flutter packages pub run build_runner build --delete-conflicting-outputs
         
-    - name: Run tests
+    - name: Run unit tests
       run: flutter test --coverage
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         file: coverage/lcov.info
+
+  integration_test:
+    runs-on: macos-latest  # Use macOS for better emulator support
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Install dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: |
+        flutter packages pub run build_runner build --delete-conflicting-outputs
+        
+    - name: Setup Android emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 30
+        target: google_apis
+        arch: x86_64
+        script: |
+          flutter pub get
+          flutter packages pub run build_runner build --delete-conflicting-outputs
+          
+    - name: Run integration tests
+      run: |
+        flutter test integration_test/app_smoke_test.dart
+        flutter test integration_test/ar_performance_test.dart
+        
+    - name: Generate test matrix
+      run: |
+        dart test/integration/test_runner.dart
+        
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-reports
+        path: test_reports/
+        retention-days: 30
+
+  performance_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Install dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: |
+        flutter packages pub run build_runner build --delete-conflicting-outputs
+        
+    - name: Run performance tests
+      run: |
+        flutter test test/unit/performance_service_test.dart
+        flutter test test/widget/performance_overlay_test.dart
+        
+    - name: Generate performance report
+      run: |
+        dart tool/generate_performance_report.dart
+        
+    - name: Upload performance artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-reports
+        path: performance_reports/
+        retention-days: 30
 
   build:
     runs-on: ubuntu-latest
