@@ -7,6 +7,7 @@ import '../../../core/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../widgets/loading_indicator.dart';
 import '../../widgets/error_widget.dart' as custom;
+import 'ar_marker_video_page.dart';
 
 class ArPage extends ConsumerStatefulWidget {
   const ArPage({super.key});
@@ -176,12 +177,14 @@ class _ArPageState extends ConsumerState<ArPage> {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('AR object placement coming soon')),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ARMarkerVideoPage(),
+                      ),
                     );
                   },
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add Object'),
+                  icon: const Icon(Icons.video_library),
+                  label: const Text('Marker Videos'),
                 ),
               ),
               SizedBox(width: 12.w),
