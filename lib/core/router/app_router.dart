@@ -8,6 +8,9 @@ import '../../presentation/pages/onboarding/onboarding_page.dart';
 import '../../presentation/pages/settings/settings_page.dart';
 import '../../presentation/pages/splash/splash_page.dart';
 import '../../presentation/pages/home/home_page.dart';
+import '../../presentation/pages/qr/qr_scanner_page.dart';
+import '../../presentation/pages/qr/qr_history_page.dart';
+import '../../presentation/pages/cache/cache_management_page.dart';
 import '../../presentation/widgets/navigation_shell.dart';
 
 GoRouter createAppRouter() {
@@ -22,6 +25,18 @@ GoRouter createAppRouter() {
         path: '/onboarding',
         builder: (context, state) => const OnboardingPage(),
       ),
+      GoRoute(
+        path: '/qr/scanner',
+        builder: (context, state) => const QRScannerPage(),
+      ),
+      GoRoute(
+        path: '/qr/history',
+        builder: (context, state) => const QRHistoryPage(),
+      ),
+      GoRoute(
+        path: '/cache/management',
+        builder: (context, state) => const CacheManagementPage(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
           return NavigationShell(child: child);
@@ -33,7 +48,10 @@ GoRouter createAppRouter() {
           ),
           GoRoute(
             path: '/ar',
-            builder: (context, state) => const ArPage(),
+            builder: (context, state) {
+              final animationId = state.extra as Map<String, String>?;
+              return ArPage(animationId: animationId?['animationId']);
+            },
           ),
           GoRoute(
             path: '/media',

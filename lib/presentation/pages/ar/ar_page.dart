@@ -9,7 +9,9 @@ import '../../widgets/loading_indicator.dart';
 import '../../widgets/error_widget.dart' as custom;
 
 class ArPage extends ConsumerStatefulWidget {
-  const ArPage({super.key});
+  final String? animationId;
+
+  const ArPage({super.key, this.animationId});
 
   @override
   ConsumerState<ArPage> createState() => _ArPageState();
