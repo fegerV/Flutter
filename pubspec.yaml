@@ -19,21 +19,25 @@ dependencies:
   flutter_riverpod: ^2.4.9
   get_it: ^7.6.4
   injectable: ^2.3.2
+  dartz: ^0.10.1
 
   # Networking & Data
   dio: ^5.4.0
   json_annotation: ^4.8.1
   flutter_cache_manager: ^3.3.1
+  vector_math: ^2.1.4
 
   # Storage & Security
   flutter_secure_storage: ^9.0.0
   shared_preferences: ^2.2.2
+  path_provider: ^2.1.1
 
   # Media & AR
   video_player: ^2.8.1
   ar_flutter_plugin: ^0.7.3
   camera: ^0.10.5+5
   permission_handler: ^11.1.0
+  collection: ^1.18.0
 
   # UI & Utilities
   cupertino_icons: ^1.0.2
