@@ -9,7 +9,9 @@ import '../../pages/qr/qr_scanner_page.dart';
 import '../../pages/cache/cache_management_page.dart';
 
 class MediaPage extends ConsumerWidget {
-  const MediaPage({super.key});
+  final String? animationId;
+  
+  const MediaPage({super.key, this.animationId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

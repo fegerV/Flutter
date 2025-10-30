@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../presentation/pages/ar/ar_page.dart';
 import '../../presentation/pages/media/media_page.dart';
 import '../../presentation/pages/onboarding/onboarding_page.dart';
+import '../../presentation/pages/onboarding/ar_onboarding_page.dart';
 import '../../presentation/pages/settings/settings_page.dart';
 import '../../presentation/pages/splash/splash_page.dart';
 import '../../presentation/pages/home/home_page.dart';
@@ -12,18 +13,38 @@ import '../../presentation/pages/qr/qr_scanner_page.dart';
 import '../../presentation/pages/qr/qr_history_page.dart';
 import '../../presentation/pages/cache/cache_management_page.dart';
 import '../../presentation/widgets/navigation_shell.dart';
+import '../../data/repositories/notification_repository.dart';
 
-GoRouter createAppRouter() {
+final appRouterProvider = Provider<GoRouter>((ref) {
+  return createAppRouter(ref);
+});
+
+GoRouter createAppRouter(Ref ref) {
   return GoRouter(
     initialLocation: '/splash',
     routes: [
       GoRoute(
         path: '/splash',
-        builder: (context, state) => const SplashPage(),
+        builder: (context, state) => SplashPage(
+          onRoutingComplete: () async {
+            final repository = NotificationRepository();
+            final onboardingCompleted = await repository.isOnboardingCompleted();
+            
+            if (!onboardingCompleted) {
+              context.go('/ar-onboarding');
+            } else {
+              context.go('/home');
+            }
+          },
+        ),
       ),
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const OnboardingPage(),
+      ),
+      GoRoute(
+        path: '/ar-onboarding',
+        builder: (context, state) => const AROnboardingPage(),
       ),
       GoRoute(
         path: '/qr/scanner',
@@ -55,7 +76,10 @@ GoRouter createAppRouter() {
           ),
           GoRoute(
             path: '/media',
-            builder: (context, state) => const MediaPage(),
+            builder: (context, state) {
+              final animationId = state.uri.queryParameters['animation'];
+              return MediaPage(animationId: animationId);
+            },
           ),
           GoRoute(
             path: '/settings',
