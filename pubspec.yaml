@@ -1,5 +1,5 @@
 name: flutter_ar_app
-description: A Flutter AR application with layered architecture and internationalization.
+description: A comprehensive Flutter AR application with clean architecture, featuring augmented reality, media management, caching, QR scanning, push notifications, and internationalization support.
 
 publish_to: 'none'
 
