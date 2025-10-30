@@ -6,11 +6,13 @@ import 'injection_container.config.dart';
 import '../../data/services/cache_service.dart';
 import '../../data/services/qr_service.dart';
 import '../../data/services/recording_service.dart';
+import '../../data/services/notification_service.dart';
 import '../../data/datasources/animation_remote_data_source.dart';
 import '../../data/repositories/animation_repository_impl.dart';
 import '../../data/repositories/qr_repository_impl.dart';
 import '../../data/repositories/cache_repository_impl.dart';
 import '../../data/repositories/recording_repository_impl.dart';
+import '../../data/repositories/notification_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -21,6 +23,7 @@ Future<void> configureDependencies() async {
   // Initialize services
   await getIt<CacheService>().initialize();
   await getIt<QRService>().initialize();
+  await getIt<NotificationService>().initialize();
 }
 
 @module
@@ -61,4 +64,10 @@ abstract class RegisterModule {
 
   @singleton
   RecordingRepositoryImpl get recordingRepository => RecordingRepositoryImpl(recordingService);
+
+  @singleton
+  NotificationRepository get notificationRepository => NotificationRepository();
+
+  @singleton
+  NotificationService get notificationService => NotificationService(notificationRepository, getIt);
 }

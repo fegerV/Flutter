@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/app_localizations.dart';
 import '../../providers/locale_provider.dart';
+import '../../providers/notification_provider.dart';
+import '../onboarding/ar_onboarding_page.dart';
+import '../../../data/repositories/notification_repository.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -33,6 +37,48 @@ class SettingsPage extends ConsumerWidget {
                 },
               ),
               _buildThemeTile(l10n: l10n),
+            ],
+          ),
+          SizedBox(height: 24.h),
+          _buildSection(
+            title: l10n.notificationSettings,
+            children: [
+              _buildNotificationToggle(
+                l10n: l10n,
+                title: l10n.enableNotifications,
+                subtitle: 'Enable or disable all notifications',
+                provider: notificationSettingsProvider,
+              ),
+              _buildNotificationToggle(
+                l10n: l10n,
+                title: l10n.newAnimationsNotification,
+                subtitle: l10n.newAnimationsNotificationDesc,
+                provider: newAnimationsNotificationsProvider,
+              ),
+              _buildNotificationToggle(
+                l10n: l10n,
+                title: l10n.arUpdatesNotification,
+                subtitle: l10n.arUpdatesNotificationDesc,
+                provider: arUpdatesNotificationsProvider,
+              ),
+            ],
+          ),
+          SizedBox(height: 24.h),
+          _buildSection(
+            title: l10n.onboardingSettings,
+            children: [
+              _buildOnboardingTile(
+                l10n: l10n,
+                title: l10n.replayOnboarding,
+                subtitle: l10n.replayOnboardingDesc,
+                onTap: () => _replayOnboarding(context),
+              ),
+              _buildOnboardingTile(
+                l10n: l10n,
+                title: l10n.resetOnboarding,
+                subtitle: l10n.resetOnboardingDesc,
+                onTap: () => _resetOnboarding(context, ref, l10n),
+              ),
             ],
           ),
           SizedBox(height: 24.h),
@@ -226,6 +272,82 @@ class SettingsPage extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildNotificationToggle({
+    required AppLocalizations l10n,
+    required String title,
+    required String subtitle,
+    required StateNotifierProvider provider,
+  }) {
+    final isEnabled = ref.watch(provider);
+    
+    return SwitchListTile(
+      secondary: const Icon(Icons.notifications),
+      title: Text(title),
+      subtitle: Text(subtitle),
+      value: isEnabled,
+      onChanged: (value) {
+        ref.read(provider.notifier).state = value;
+      },
+    );
+  }
+
+  Widget _buildOnboardingTile({
+    required AppLocalizations l10n,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: const Icon(Icons.school),
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: onTap,
+    );
+  }
+
+  void _replayOnboarding(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const AROnboardingPage(),
+      ),
+    );
+  }
+
+  Future<void> _resetOnboarding(
+    BuildContext context, 
+    WidgetRef ref, 
+    AppLocalizations l10n
+  ) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.resetOnboarding),
+        content: Text(l10n.resetOnboardingDesc),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              final repository = ref.read(notificationRepositoryProvider);
+              await repository.resetOnboarding();
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Onboarding will show on next app start'),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
+            child: Text(l10n.confirm),
+          ),
+        ],
       ),
     );
   }

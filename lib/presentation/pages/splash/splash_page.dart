@@ -7,7 +7,9 @@ import '../../../core/l10n/app_localizations.dart';
 import '../../providers/locale_provider.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
-  const SplashPage({super.key});
+  final VoidCallback? onRoutingComplete;
+
+  const SplashPage({super.key, this.onRoutingComplete});
 
   @override
   ConsumerState<SplashPage> createState() => _SplashPageState();
@@ -48,7 +50,11 @@ class _SplashPageState extends ConsumerState<SplashPage>
   void _navigateToNextScreen() {
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        context.go('/onboarding');
+        if (widget.onRoutingComplete != null) {
+          widget.onRoutingComplete!();
+        } else {
+          context.go('/onboarding');
+        }
       }
     });
   }
