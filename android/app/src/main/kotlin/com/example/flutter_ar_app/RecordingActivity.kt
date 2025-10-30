@@ -19,7 +19,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity: FlutterActivity() {
+class RecordingActivity : FlutterActivity() {
     private val CHANNEL = "recording_channel"
     private var mediaRecorder: MediaRecorder? = null
     private var mediaProjection: MediaProjection? = null
@@ -28,7 +28,6 @@ class MainActivity: FlutterActivity() {
     private var currentRecordingPath: String? = null
     private var isRecording = false
     private var isPaused = false
-    private var pendingResult: MethodChannel.Result? = null
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -94,10 +93,10 @@ class MainActivity: FlutterActivity() {
             }
 
             // Request screen capture permission
-            pendingResult = result
             val intent = mediaProjectionManager?.createScreenCaptureIntent()
             if (intent != null) {
                 startActivityForResult(intent, REQUEST_CODE)
+                result.success(true)
             } else {
                 result.error("PROJECTION_ERROR", "Failed to create screen capture intent", null)
             }
@@ -108,20 +107,14 @@ class MainActivity: FlutterActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                data?.let { resultData ->
-                    mediaProjection = mediaProjectionManager?.getMediaProjection(resultCode, resultData)
-                    startVirtualDisplay()
-                    mediaRecorder?.start()
-                    isRecording = true
-                    isPaused = false
-                    pendingResult?.success(true)
-                }
-            } else {
-                pendingResult?.success(false)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            data?.let { resultData ->
+                mediaProjection = mediaProjectionManager?.getMediaProjection(resultCode, resultData)
+                startVirtualDisplay()
+                mediaRecorder?.start()
+                isRecording = true
+                isPaused = false
             }
-            pendingResult = null
         }
     }
 
