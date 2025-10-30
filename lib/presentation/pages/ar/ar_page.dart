@@ -7,6 +7,9 @@ import '../../../core/l10n/app_localizations.dart';
 import '../../../core/config/app_config.dart';
 import '../../widgets/loading_indicator.dart';
 import '../../widgets/error_widget.dart' as custom;
+import '../../widgets/recording_controls.dart';
+import '../../widgets/recording_gallery.dart';
+import '../providers/recording_provider.dart';
 
 class ArPage extends ConsumerStatefulWidget {
   final String? animationId;
@@ -126,82 +129,109 @@ class _ArPageState extends ConsumerState<ArPage> {
   }
 
   Widget _buildArContent(AppLocalizations l10n) {
-    return Padding(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
+    return Stack(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.view_in_ar,
+                              size: 80.w,
+                              color: Colors.white54,
+                            ),
+                            SizedBox(height: 16.h),
+                            Text(
+                              'AR View',
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                color: Colors.white54,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Text(
+                              'AR functionality will be implemented here',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.white38,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              child: Stack(
+              SizedBox(height: 80.h), // Space for recording controls
+              SizedBox(height: 16.h),
+              Row(
                 children: [
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.view_in_ar,
-                          size: 80.w,
-                          color: Colors.white54,
-                        ),
-                        SizedBox(height: 16.h),
-                        Text(
-                          'AR View',
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            color: Colors.white54,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          'AR functionality will be implemented here',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.white38,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('AR object placement coming soon')),
+                        );
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add Object'),
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('AR settings coming soon')),
+                        );
+                      },
+                      icon: const Icon(Icons.tune),
+                      label: const Text('Settings'),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-          SizedBox(height: 16.h),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('AR object placement coming soon')),
-                    );
-                  },
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add Object'),
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('AR settings coming soon')),
-                    );
-                  },
-                  icon: const Icon(Icons.tune),
-                  label: const Text('Settings'),
-                ),
-              ),
             ],
           ),
-        ],
-      ),
+        ),
+        Positioned(
+          bottom: 100.h,
+          left: 16.w,
+          right: 16.w,
+          child: const RecordingControls(),
+        ),
+        Positioned(
+          top: 60.h,
+          right: 16.w,
+          child: FloatingActionButton(
+            mini: true,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const RecordingGallery(),
+                ),
+              );
+            },
+            backgroundColor: Colors.black.withOpacity(0.8),
+            child: const Icon(Icons.photo_library),
+          ),
+        ),
+      ],
     );
   }
 }
