@@ -1,6 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'injection_container.config.dart';
 
@@ -21,4 +23,14 @@ abstract class RegisterModule {
       sendTimeout: const Duration(seconds: 30),
     ),
   );
+
+  @singleton
+  FlutterSecureStorage get secureStorage => const FlutterSecureStorage(
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+    ),
+  );
+
+  @singleton
+  Connectivity get connectivity => Connectivity();
 }
